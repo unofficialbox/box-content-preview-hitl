@@ -1,0 +1,18 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: var(--text-on-light-default, #222);
+  background: var(--background-background, #fff);
+}

@@ -1,0 +1,59 @@
+{
+  "appTitle": "Box Blueprint Studio",
+  "appName": "My App",
+  "defaultSection": "metrics",
+  "sidebarMenuItems": [
+    {
+      "id": "metrics",
+      "label": "Metrics",
+      "icon": "TrendUp",
+      "defaultTitle": "Metrics",
+      "dataSource": "metrics",
+      "cardLayout": "metric",
+      "titleField": "name",
+      "searchFields": [
+        "name"
+      ],
+      "status": {
+        "strategy": "percent-threshold",
+        "config": {
+          "valueField": "current",
+          "totalField": "target",
+          "thresholds": {
+            "onTrack": 70,
+            "atRisk": 40
+          }
+        }
+      },
+      "cardFields": [
+        {
+          "key": "current",
+          "label": "Current",
+          "type": "currency"
+        },
+        {
+          "key": "target",
+          "label": "Target",
+          "type": "currency"
+        }
+      ],
+      "features": {
+        "selectable": false
+      },
+      "categories": [],
+      "groups": [],
+      "filters": [
+        {
+          "key": "region",
+          "label": "Region",
+          "options": [
+            "North",
+            "South",
+            "East",
+            "West"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "name": "box-blueprint-template",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "bun --hot ./index.ts",
+    "start": "bun ./index.ts",
+    "build": "bun build ./index.html --outdir=dist/minified --minify",
+    "build:dev": "bun build ./index.html --outdir=dist/dev"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/react": "^19.2.16",
+    "@types/react-dom": "^19.2.3"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@box/blueprint-web": "^15.2.0",
+    "@box/blueprint-web-assets": "^4.121.5",
+    "clsx": "^2.1.1",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7"
+  }
+}
