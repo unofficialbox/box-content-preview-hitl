@@ -7,21 +7,25 @@
     "dev": "bun --hot ./index.ts",
     "start": "bun ./index.ts",
     "build": "bun build ./index.html --outdir=dist/minified --minify",
-    "build:dev": "bun build ./index.html --outdir=dist/dev"
+    "build:dev": "bun build ./index.html --outdir=dist/dev",
+    "postinstall": "node ./scripts/patch-box-ui-elements.mjs"
   },
   "devDependencies": {
     "@types/bun": "latest",
-    "@types/react": "^19.2.16",
-    "@types/react-dom": "^19.2.3"
+    "@types/react": "18.3.23",
+    "@types/react-dom": "18.3.7"
   },
   "peerDependencies": {
     "typescript": "^5"
   },
   "dependencies": {
-    "@box/blueprint-web": "^15.2.0",
-    "@box/blueprint-web-assets": "^4.121.5",
+    "@box/blueprint-web": "^16.1.4",
+    "@box/blueprint-web-assets": "^5.2.2",
+    "box-annotations": "5.2.1-beta.18",
+    "box-ui-elements": "27.0.0-beta.66",
     "clsx": "^2.1.1",
-    "react": "^19.2.7",
-    "react-dom": "^19.2.7"
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "react-intl": "6.6.8"
   }
 }
