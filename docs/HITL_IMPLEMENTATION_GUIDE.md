@@ -2,11 +2,11 @@
 
 This guide describes the configuration and application changes required to reproduce the working metadata Autofill, confidence-level, and bounding-box workflow in this repository.
 
-## Manual Implementation: Start to Working Experience
+## 🧭 Manual Implementation: Start to Working Experience
 
 Follow these steps in order. Complete the authentication and native Preview integration first, then add the beta compatibility bridges and application shell.
 
-### 1. Configure the Box application
+### 1. ⚙️ Configure the Box application
 
 Create a Custom App using Client Credentials Grant (CCG), authorize it in the enterprise, and use a Box user that can access the target file and metadata template.
 
@@ -30,7 +30,7 @@ BOX_PREVIEW_SCOPES="base_preview item_download root_readwrite annotation_edit an
 
 Keep the client secret and broad CCG token on the server.
 
-### 2. Install the known-good package versions
+### 2. 📦 Install the known-good package versions
 
 ```sh
 bun add box-ui-elements@27.0.0-beta.66 \
@@ -47,7 +47,7 @@ import ContentPreview from "box-ui-elements/es/elements/content-preview";
 
 This Bun project also runs [`scripts/patch-box-ui-elements.mjs`](../scripts/patch-box-ui-elements.mjs) from `postinstall` to repair generated Flow-only modules and a CommonJS React import in the beta dependency graph. Other bundlers may not need this patch.
 
-### 3. Serve the package CSS from your application
+### 3. 📦 Serve the package CSS from your application
 
 Serve the CSS files installed with `box-ui-elements`:
 
@@ -78,7 +78,7 @@ for (const href of [
 }
 ```
 
-### 4. Implement CCG and token exchange on the server
+### 4. 🔐 Implement CCG and token exchange on the server
 
 First request a CCG service token for the configured user. Exchange it for a token restricted to one file and the required scopes.
 
@@ -113,7 +113,7 @@ GET /api/box-preview-token?fileId={fileId}
 }
 ```
 
-### 5. Fetch the downscoped token in React
+### 5. 🔐 Fetch the downscoped token in React
 
 ```ts
 const [token, setToken] = useState("");
@@ -129,7 +129,7 @@ const getToken = useCallback(async () => token, [token]);
 
 Pass an async function to `ContentPreview`. Preview `3.59.0` requires a token function for its annotation integration.
 
-### 6. Configure the HITL features
+### 6. ⚙️ Configure the HITL features
 
 Keep the flags in state if users should be able to toggle them:
 
@@ -145,7 +145,7 @@ const [features, setFeatures] = useState({
 
 Pass the same object to both `ContentPreview.features` and `contentSidebarProps.features`.
 
-### 7. Render Content Preview and default to Metadata
+### 7. ✅ Render Content Preview and default to Metadata
 
 ```tsx
 const boxAnnotations = new BoxAnnotations({});
@@ -184,7 +184,7 @@ const boxAnnotations = new BoxAnnotations({});
 
 Both `defaultView` and the router-level `initialEntries` are needed in this package version. Without `initialEntries`, the outer Preview router opens Activity first.
 
-### 8. Retain Box AI references and confidence scores
+### 8. 🩹 Retain Box AI references and confidence scores
 
 Use `responseInterceptor` to retain the structured extraction response:
 
@@ -214,7 +214,7 @@ const box = {
 
 The complete normalization, detailed-metadata hydration, and session fallback are in [`HitlPreviewExample.tsx`](../src/components/hitl/HitlPreviewExample.tsx).
 
-### 9. Bridge metadata selection to native Preview boxes
+### 9. 🩹 Bridge metadata selection to native Preview boxes
 
 The host does not draw rectangles. It calls Preview's public API with the retained coordinates:
 
@@ -228,7 +228,7 @@ if (boxes.length && preview?.showBoundingBoxHighlights) {
 
 Attach this to focus and click events around `ContentPreview`, resolve the metadata field label, and look up its boxes. Native Preview then owns drawing, zoom, scrolling, resize, and annotation mode.
 
-### 10. Repair the beta metadata save patch
+### 10. 🩹 Repair the beta metadata save patch
 
 This beta can omit the HITL details when it builds the metadata JSON Patch. In `requestInterceptor`, add the missing operations before returning the request:
 
@@ -247,7 +247,7 @@ operations.push(
 
 Guard against duplicate paths. Remove this workaround after confirming a future UI Elements version creates these operations itself.
 
-### 11. Add numeric confidence percentages
+### 11. 🚨 Add numeric confidence percentages
 
 The native sidebar exposes review states but does not render the raw percentage required by this experience. Add a data attribute to each matching metadata heading:
 
@@ -276,7 +276,7 @@ Render the pill with CSS:
 
 Use a `MutationObserver` because the metadata sidebar renders and rerenders inside UI Elements after network responses and navigation.
 
-### 12. Build the host application shell
+### 12. 🚨 Build the host application shell
 
 The shell in this repository is custom application UI, not Box UI Elements behavior:
 
@@ -318,7 +318,7 @@ Render the terminal only when configuration is open:
 {isSettingsOpen ? <PreviewEventTerminal events={events} /> : null}
 ```
 
-### 13. Verify the complete flow
+### 13. ✅ Verify the complete flow
 
 ```sh
 PORT=3000 bun run dev
@@ -338,9 +338,9 @@ Then verify manually:
 8. Closing configuration expands Preview and removes the event terminal.
 9. With configuration open, the terminal remains pinned while the main pane scrolls.
 
-## Change Matrix
+## 🧾 Change Matrix
 
-### Legend
+### 🗝️ Legend
 
 - ⚙️ **Configuration**: Box application, environment, permissions, or feature flags; no custom behavior.
 - 🔐 **Required authentication integration**: standard Box authentication and token handling required by the integration.
@@ -372,7 +372,7 @@ Then verify manually:
 | 🩹 Beta workaround | Cache converted boxes in session storage per file | `HitlPreviewExample.tsx` | No | Preserves unsaved session highlighting across navigation or reload. |
 | 🚨 Required custom application code | Display numeric confidence percentages beside metadata keys | `HitlPreviewExample.tsx` and `app-layout.css` | Product requirement | Native UI exposes qualitative confidence only, so the host presents Box AI's numeric score as an accessible percentage pill. |
 
-### Ownership Summary
+### 🧩 Ownership Summary
 
 | Responsibility | Owner |
 | --- | --- |
@@ -385,7 +385,7 @@ Then verify manually:
 | Reference retention and save-patch repair in this pinned beta | 🩹 Temporary host workarounds |
 | Numeric confidence percentage pills | 🚨 Host application presentation |
 
-## Known-Good Versions
+## 📌 Known-Good Versions
 
 Pin these versions together. Later or earlier combinations may change the Preview/Annotations contract.
 
@@ -405,7 +405,7 @@ Pin Box Content Preview at runtime:
 const previewLibraryVersion = "3.59.0";
 ```
 
-## Box Application Configuration
+## ⚙️ Box Application Configuration
 
 Configure a Custom App using Client Credentials Grant (CCG):
 
@@ -429,7 +429,7 @@ BOX_PREVIEW_SCOPES="base_preview item_download root_readwrite annotation_edit an
 
 Do not expose `BOX_CLIENT_SECRET` or the broad CCG service token to the browser.
 
-## Authentication Flow
+## 🔐 Authentication Flow
 
 ```mermaid
 sequenceDiagram
@@ -461,7 +461,7 @@ new URLSearchParams({
 
 `ai.readwrite` is required for `POST /2.0/ai/extract_structured`. `root_readwrite` is required here because the workflow updates metadata.
 
-## Package Assets
+## 📦 Package Assets
 
 Import the React component from npm. Do not load `preview.js` yourself.
 
@@ -478,7 +478,7 @@ Serve the installed UI Elements styles from the application origin:
 
 Load both styles before rendering `ContentPreview`. Do not use jsdelivr or another package CDN for these files.
 
-## ContentPreview Configuration
+## ✅ ContentPreview Configuration
 
 Enable the metadata redesign and HITL features:
 
@@ -525,7 +525,7 @@ Minimum relevant props:
 
 To enable the full example, also set `enableThumbnailsSidebar`, `hasHeader`, Activity Feed, Metadata, Details, and Box AI Content Answers as shown in `HitlPreviewExample.tsx`.
 
-## Metadata Sidebar Callbacks
+## 🚨 Metadata Sidebar Callbacks
 
 The redesigned metadata sidebar expects its callbacks under `metadataSidebarProps`, not at the parent sidebar level:
 
@@ -541,7 +541,7 @@ contentSidebarProps={{
 
 If these callbacks are omitted in this beta, Box may return HTTP 200 while the UI displays the generic metadata update error because the client throws after the successful response.
 
-## Bounding-Box Data Flow
+## ✅ Bounding-Box Data Flow
 
 ```mermaid
 flowchart LR
@@ -579,7 +579,7 @@ Preview expects percentage coordinates and a one-based page number. The conversi
 
 Preview owns drawing, scrolling, selection, resize, and zoom behavior. Do not add an application-owned rectangle overlay.
 
-## Compatibility Bridges Required by This Beta
+## 🩹 Compatibility Bridges Required by This Beta
 
 These are workarounds for the pinned beta, not general Box platform requirements:
 
@@ -603,13 +603,13 @@ These are workarounds for the pinned beta, not general Box platform requirements
 
 Once Box UI Elements forwards unsaved references and generates these patch operations correctly, remove these bridges and rely on its native `useMetadataFieldSelection` path.
 
-## Confidence Scores
+## 🚨 Confidence Scores
 
 With `metadata.confidenceScore.enabled`, Autofill sends `include_confidence_score=true`. The native UI displays qualitative states such as high or low confidence and a low-confidence review indicator.
 
 This application additionally reads `response.confidence_score`, uses the lowest score when Box returns multiple scores for one field, converts values from `0..1` to a rounded percentage, and displays an accessible pill beside the read-only metadata key. High, medium, and low levels use green, amber, and red styling. After save, the display hydrates from Box's `metadata?view=detailed` response in new browser sessions. The normalized display scores are cached per file for the active browser session; tokens, metadata values, and document text are not stored.
 
-## Verification
+## ✅ Verification
 
 1. Start the app and open the HITL screen.
 2. Confirm Preview renders the real file.
@@ -627,7 +627,7 @@ bun run build
 bun run build:dev
 ```
 
-## Troubleshooting
+## 🛠️ Troubleshooting
 
 | Symptom | Check |
 | --- | --- |
@@ -641,7 +641,7 @@ bun run build:dev
 | Box returns 200 but UI shows update error | Put `onSuccess` and `onError` under `contentSidebarProps.metadataSidebarProps` |
 | Boxes disappear after reload | Persist `targetLocation` or use the documented session fallback |
 
-## Reference Files
+## 📚 Reference Files
 
 - `index.ts`: CCG, downscoping, and local CSS routes.
 - `src/frontend.tsx`: local package stylesheet loading.
