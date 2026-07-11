@@ -1,37 +1,11 @@
 {
   "appTitle": "Box Blueprint",
   "appName": "My App",
-  "defaultSection": "hitl-example",
   "sidebarMenuItems": [
     {
       "id": "hitl-example",
       "label": "HITL Example",
-      "icon": "Code",
-      "defaultTitle": "HITL Example",
-      "viewType": "hitl-preview",
-      "dataSource": "hitl",
-      "cardLayout": "metric",
-      "titleField": "name",
-      "searchFields": [],
-      "status": {
-        "strategy": "field-map",
-        "config": {
-          "field": "status",
-          "map": {
-            "ready": {
-              "label": "Ready",
-              "color": "on-track"
-            }
-          }
-        }
-      },
-      "cardFields": [],
-      "features": {
-        "selectable": false
-      },
-      "categories": [],
-      "groups": [],
-      "filters": []
+      "icon": "Code"
     }
   ]
 }

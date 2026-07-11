@@ -696,4 +696,3 @@ bun run build:dev
 - `src/frontend.tsx`: local package stylesheet loading.
 - `src/components/hitl/HitlPreviewExample.tsx`: complete React integration and compatibility bridges.
 - `scripts/patch-box-ui-elements.mjs`: Bun compatibility patch applied after install.
-- `HITL_HANDOFF.md`: current repository state and verification history.

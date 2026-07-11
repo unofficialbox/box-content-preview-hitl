@@ -11,7 +11,6 @@ export const primaryNavItems: SidebarNavItem[] = appConfig.sidebarMenuItems.map(
   id: section.id,
   label: section.label,
   icon: iconMap[section.icon] ?? Code,
-  children: section.categories,
 }));
 
 export { BoxLogo };

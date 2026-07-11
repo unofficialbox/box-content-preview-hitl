@@ -6,14 +6,12 @@ import {
 } from "@box/blueprint-web";
 import { BoxBlue100 } from "@box/blueprint-web-assets/tokens/tokens";
 import type { WheelEvent } from "react";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { supplementaryFontFacesConfig } from "../../config/fonts";
 import { HitlPreviewExample } from "../hitl/HitlPreviewExample";
 import { Sidebar } from "../sidebar/Sidebar";
-import { GlobalHeaderActions, GlobalHeaderSearch } from "./GlobalHeaderActions";
 
 export function AppLayout() {
-  const [searchQuery, setSearchQuery] = useState("");
   const mainScrollRef = useRef<HTMLDivElement | null>(null);
 
   const handleMainWheel = (event: WheelEvent<HTMLDivElement>) => {
@@ -40,17 +38,7 @@ export function AppLayout() {
           <Sidebar />
         </Page.Navigation>
 
-        <Page.GlobalHeader>
-          <div className="global-header-grid">
-            <div className="global-header-grid__search">
-              <GlobalHeaderSearch searchQuery={searchQuery} onSearchChange={setSearchQuery} />
-            </div>
-            <div className="global-header-grid__spacer" />
-            <div className="global-header-grid__actions">
-              <GlobalHeaderActions />
-            </div>
-          </div>
-        </Page.GlobalHeader>
+        <Page.GlobalHeader className="app-global-header" />
 
         <Page.MainSection>
           <Page.MainSection.Content>

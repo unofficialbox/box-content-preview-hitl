@@ -342,7 +342,7 @@ export function HitlPreviewExample() {
   return (
     <div className="main-page hitl-page">
       <div className={isSettingsOpen ? "hitl-workspace" : "hitl-workspace hitl-workspace--settings-closed"}>
-        <div className={isSettingsOpen ? "hitl-stage" : "hitl-stage hitl-stage--settings-closed"}>
+        <div className="hitl-stage">
           {!isSettingsOpen ? (
             <div className="hitl-settings-toolbar">
               <button

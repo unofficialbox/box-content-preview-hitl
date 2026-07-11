@@ -47,12 +47,6 @@ export function Sidebar() {
             isCollapsed={!navigationExpanded}
             isSelected={activeItemId === item.id}
             onSelect={handleSelectParent}
-            selectedChildId={null}
-            onSelectChild={(_, parentId) => {
-              if (parentId && activeItemId !== parentId) {
-                setActiveItemId(parentId);
-              }
-            }}
           />
         ))}
       </div>

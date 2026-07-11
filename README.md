@@ -136,6 +136,5 @@ Expected result: HTTP 200 with a downscoped token payload. Never expose the clie
 ## Documentation
 
 - [Developer implementation guide](docs/HITL_IMPLEMENTATION_GUIDE.md): numbered, source-linked instructions for reproducing the integration.
-- [Current handoff](HITL_HANDOFF.md): implementation state, verification history, and remaining operational checks.
 
 The implementation guide distinguishes Box configuration, native Box behavior, required host code, and temporary beta workarounds with consistent emojis.
