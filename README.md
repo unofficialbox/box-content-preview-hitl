@@ -2,6 +2,19 @@
 
 A working React example of Box Content Preview with a human-in-the-loop metadata workflow. It combines Box UI Elements, Box AI structured extraction, native Preview bounding boxes, and numeric confidence scores using a server-issued downscoped token.
 
+**Building this integration yourself? Start with the [Developer Implementation Guide](docs/HITL_IMPLEMENTATION_GUIDE.md).**
+
+## Table of Contents
+
+- [Developer Implementation Guide](docs/HITL_IMPLEMENTATION_GUIDE.md)
+- [What This Demonstrates](#what-this-demonstrates)
+- [Prerequisites](#prerequisites)
+- [Box App Configuration](#box-app-configuration)
+- [Local Setup](#local-setup)
+- [Expected Workflow](#expected-workflow)
+- [Verification](#verification)
+- [Documentation](#documentation)
+
 ## What This Demonstrates
 
 - Client Credentials Grant (CCG) with a Box user subject.
