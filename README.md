@@ -55,24 +55,23 @@ ai.readwrite
    bun install
    ```
 
-2. Create `.env` in the repository root.
+2. Copy the environment template to `.env`.
 
    ```sh
-   BOX_CLIENT_ID=
-   BOX_CLIENT_SECRET=
-   BOX_ENTERPRISE_ID=
-   BOX_SUBJECT_TYPE=user
-   BOX_SUBJECT_ID=<box-user-id>
-   BOX_PREVIEW_SCOPES="base_preview item_download root_readwrite annotation_edit annotation_view_all ai.readwrite"
+   cp .env.sample .env
    ```
 
-3. Start the app.
+3. Open `.env` and replace every `your_box_*` placeholder with values from the Box Developer Console. Set `BOX_SUBJECT_ID` to a Box user that can access the target file and metadata template.
+
+   Do not commit `.env`. It contains the application client secret and is ignored by git.
+
+4. Start the app.
 
    ```sh
    PORT=3000 bun run dev
    ```
 
-4. Open [http://localhost:3000](http://localhost:3000).
+5. Open [http://localhost:3000](http://localhost:3000).
 
 The default example file is `2056558550295`. Enter another accessible Box file ID in the configuration sidebar to test a different file.
 

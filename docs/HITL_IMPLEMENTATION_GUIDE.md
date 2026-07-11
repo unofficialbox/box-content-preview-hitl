@@ -34,6 +34,12 @@ In the Developer Console:
 Use a user subject in the server environment:
 
 ```sh
+cp .env.sample .env
+```
+
+Then populate `.env` with the Box app and subject values:
+
+```sh
 BOX_CLIENT_ID=
 BOX_CLIENT_SECRET=
 BOX_ENTERPRISE_ID=
