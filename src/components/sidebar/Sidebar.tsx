@@ -6,19 +6,12 @@ import appConfig from "../../data/json/app-config.json";
 import { BoxLogo, primaryNavItems } from "./nav-items";
 import { SidebarNavItem } from "./SidebarNavItem";
 
-interface SidebarProps {
-  activeChildId: string | null;
-  onSelectChild: (id: string | null, parentId?: string) => void;
-  onSelectParent: (id: string) => void;
-}
-
-export function Sidebar({ activeChildId, onSelectChild, onSelectParent }: SidebarProps) {
+export function Sidebar() {
   const { navigationExpanded, toggleNavigationExpanded } = usePageNavigation();
   const [activeItemId, setActiveItemId] = useState(appConfig.sidebarMenuItems[0]?.id || "");
 
   const handleSelectParent = (id: string) => {
     setActiveItemId(id);
-    onSelectParent(id);
   };
 
   return (
@@ -54,13 +47,11 @@ export function Sidebar({ activeChildId, onSelectChild, onSelectParent }: Sideba
             isCollapsed={!navigationExpanded}
             isSelected={activeItemId === item.id}
             onSelect={handleSelectParent}
-            selectedChildId={activeChildId}
-            onSelectChild={(childId, parentId) => {
+            selectedChildId={null}
+            onSelectChild={(_, parentId) => {
               if (parentId && activeItemId !== parentId) {
                 setActiveItemId(parentId);
-                onSelectParent(parentId);
               }
-              onSelectChild(childId);
             }}
           />
         ))}

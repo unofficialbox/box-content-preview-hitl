@@ -1,59 +1,37 @@
 {
   "appTitle": "Box Blueprint Studio",
   "appName": "My App",
-  "defaultSection": "metrics",
+  "defaultSection": "hitl-example",
   "sidebarMenuItems": [
     {
-      "id": "metrics",
-      "label": "Metrics",
-      "icon": "TrendUp",
-      "defaultTitle": "Metrics",
-      "dataSource": "metrics",
+      "id": "hitl-example",
+      "label": "HITL Example",
+      "icon": "Code",
+      "defaultTitle": "HITL Example",
+      "viewType": "hitl-preview",
+      "dataSource": "hitl",
       "cardLayout": "metric",
       "titleField": "name",
-      "searchFields": [
-        "name"
-      ],
+      "searchFields": [],
       "status": {
-        "strategy": "percent-threshold",
+        "strategy": "field-map",
         "config": {
-          "valueField": "current",
-          "totalField": "target",
-          "thresholds": {
-            "onTrack": 70,
-            "atRisk": 40
+          "field": "status",
+          "map": {
+            "ready": {
+              "label": "Ready",
+              "color": "on-track"
+            }
           }
         }
       },
-      "cardFields": [
-        {
-          "key": "current",
-          "label": "Current",
-          "type": "currency"
-        },
-        {
-          "key": "target",
-          "label": "Target",
-          "type": "currency"
-        }
-      ],
+      "cardFields": [],
       "features": {
         "selectable": false
       },
       "categories": [],
       "groups": [],
-      "filters": [
-        {
-          "key": "region",
-          "label": "Region",
-          "options": [
-            "North",
-            "South",
-            "East",
-            "West"
-          ]
-        }
-      ]
+      "filters": []
     }
   ]
 }

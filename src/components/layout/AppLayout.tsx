@@ -5,46 +5,39 @@ import {
   TooltipProvider,
 } from "@box/blueprint-web";
 import { BoxBlue100 } from "@box/blueprint-web-assets/tokens/tokens";
-import { useState } from "react";
+import type { WheelEvent } from "react";
+import { useRef, useState } from "react";
 import { supplementaryFontFacesConfig } from "../../config/fonts";
-import appConfig from "../../data/json/app-config.json";
-import { dataSourceMap } from "../../data/index";
-import type { SectionConfig } from "../../types/app-config";
-import { SectionView } from "../global/SectionView";
+import { HitlPreviewExample } from "../hitl/HitlPreviewExample";
 import { Sidebar } from "../sidebar/Sidebar";
 import { GlobalHeaderActions, GlobalHeaderSearch } from "./GlobalHeaderActions";
 
 export function AppLayout() {
-  const [activeSection, setActiveSection] = useState(appConfig.defaultSection);
-  const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const mainScrollRef = useRef<HTMLDivElement | null>(null);
 
-  const handleSelectParent = (id: string) => {
-    setActiveSection(id);
-    setActiveCategory(null);
-  };
+  const handleMainWheel = (event: WheelEvent<HTMLDivElement>) => {
+    const container = mainScrollRef.current;
+    if (!container || event.ctrlKey || event.metaKey || !event.deltaY) return;
 
-  const handleSelectChild = (childId: string | null, parentId?: string) => {
-    if (parentId && activeSection !== parentId) {
-      setActiveSection(parentId);
+    const canScrollUp = event.deltaY < 0 && container.scrollTop > 0;
+    const canScrollDown = event.deltaY > 0
+      && container.scrollTop + container.clientHeight < container.scrollHeight;
+
+    if (canScrollUp || canScrollDown) {
+      event.preventDefault();
+      event.stopPropagation();
+      container.scrollTop += event.deltaY;
     }
-    setActiveCategory(childId);
   };
-
-  const section = appConfig.sidebarMenuItems.find((s) => s.id === activeSection) || appConfig.sidebarMenuItems[0]!;
-  const data = dataSourceMap[section.dataSource] || [];
 
   return (
     <TooltipProvider>
       <BrandingStyles brandColor={BoxBlue100} />
       <SupplementaryFonts supplementaryFontFacesConfig={supplementaryFontFacesConfig} />
-      <Page className="app-page" defaultMainContentSidebarVisible={false}>
+      <Page className="app-page">
         <Page.Navigation>
-          <Sidebar
-            onSelectChild={handleSelectChild}
-            onSelectParent={handleSelectParent}
-            activeChildId={activeCategory}
-          />
+          <Sidebar />
         </Page.Navigation>
 
         <Page.GlobalHeader>
@@ -59,17 +52,11 @@ export function AppLayout() {
           </div>
         </Page.GlobalHeader>
 
-        <Page.PageHeader />
-
         <Page.MainSection>
           <Page.MainSection.Content>
-            <SectionView
-              key={section.id}
-              section={section as SectionConfig}
-              data={data}
-              activeCategory={activeCategory}
-              searchQuery={searchQuery}
-            />
+            <div ref={mainScrollRef} className="app-main-scroll" onWheelCapture={handleMainWheel}>
+              <HitlPreviewExample />
+            </div>
           </Page.MainSection.Content>
         </Page.MainSection>
       </Page>
