@@ -2,6 +2,9 @@
 
 A working React example of Box Content Preview with a human-in-the-loop metadata workflow. It combines Box UI Elements, Box AI structured extraction, native Preview bounding boxes, and numeric confidence scores using a server-issued downscoped token.
 
+> [!CAUTION]
+> This HITL metadata experience is currently in beta. It depends on beta Box UI Elements and Box Annotations packages, a pinned Content Preview version, and temporary compatibility bridges that may need to change or be removed as the upstream APIs evolve. Validate upgrades before using this implementation in production.
+
 **Building this integration yourself? Start with the [Developer Implementation Guide](docs/HITL_IMPLEMENTATION_GUIDE.md).**
 
 ## Table of Contents
