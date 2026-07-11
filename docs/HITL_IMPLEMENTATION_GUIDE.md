@@ -2,6 +2,8 @@
 
 This guide describes the configuration and application changes required to reproduce the working metadata Autofill, confidence-level, and bounding-box workflow in this repository.
 
+For repository setup, environment variables, and the shortest path to running the example, start with the [README](../README.md). This guide focuses on rebuilding and understanding the integration.
+
 ## 🧭 Manual Implementation: Start to Working Experience
 
 Follow these steps in order. Complete the authentication and native Preview integration first, then add the beta compatibility bridges and application shell.
