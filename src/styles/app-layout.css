@@ -9,7 +9,7 @@
 }
 
 .app-page [class*="pageBodyContent"] {
-  padding-block-start: 0 !important;
+  padding-block-start: 10px !important;
 }
 
 .app-page .app-global-header {
@@ -232,8 +232,8 @@
 
 .hitl-workspace {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 300px;
-  gap: 16px;
+  grid-template-columns: minmax(0, 1fr) 300px 36px;
+  gap: 12px;
   height: auto;
   min-height: 0;
 }
@@ -338,6 +338,13 @@
   border: 1px solid transparent;
   border-radius: 6px;
   cursor: pointer;
+}
+
+.hitl-settings-close {
+  align-self: start;
+  background: #fff;
+  border-color: #d9dfe7;
+  box-shadow: 0 2px 6px rgb(0 0 0 / 0.1);
 }
 
 .hitl-settings__section {
@@ -629,6 +636,12 @@
   .hitl-settings {
     min-height: auto;
     grid-row: 1;
+  }
+
+  .hitl-settings-close {
+    position: absolute;
+    top: 8px;
+    right: 8px;
   }
 
   .hitl-preview-shell,

@@ -458,15 +458,6 @@ export function HitlPreviewExample() {
                 <span className="hitl-settings__eyebrow">HITL</span>
                 <h2>Configuration</h2>
               </div>
-              <button
-                type="button"
-                className="hitl-icon-button"
-                aria-label="Close preview configuration"
-                title="Close preview configuration"
-                onClick={() => setIsSettingsOpen(false)}
-              >
-                <RightSidebarChevronClose aria-hidden="true" />
-              </button>
             </div>
 
             <div className="hitl-settings__section">
@@ -509,6 +500,18 @@ export function HitlPreviewExample() {
               </div>
             </div>
           </aside>
+        ) : null}
+
+        {isSettingsOpen ? (
+          <button
+            type="button"
+            className="hitl-icon-button hitl-settings-close"
+            aria-label="Close preview configuration"
+            title="Close preview configuration"
+            onClick={() => setIsSettingsOpen(false)}
+          >
+            <RightSidebarChevronClose aria-hidden="true" />
+          </button>
         ) : null}
       </div>
 
