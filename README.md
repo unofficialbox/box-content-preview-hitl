@@ -11,6 +11,7 @@ A working React example of Box Content Preview with a human-in-the-loop metadata
 
 - [Developer Implementation Guide](docs/HITL_IMPLEMENTATION_GUIDE.md)
 - [What This Demonstrates](#what-this-demonstrates)
+- [Interface Tour](#interface-tour)
 - [Prerequisites](#prerequisites)
 - [Box App Configuration](#box-app-configuration)
 - [Local Setup](#local-setup)
@@ -31,6 +32,20 @@ A working React example of Box Content Preview with a human-in-the-loop metadata
 - Numeric confidence percentages beside metadata fields.
 - Activity Feed, Box AI Content Answers, annotations, and thumbnails.
 - A collapsible configuration sidebar and sticky Preview event terminal.
+
+## Interface Tour
+
+### Expanded Configuration Panel
+
+The host application panel exposes the file ID, downscoped-token status, and runtime feature switches without replacing the native Box Content Sidebar.
+
+![HITL Preview with the expanded configuration panel and metadata sidebar](docs/assets/hitl-configuration-panel.png)
+
+### Preview Event Terminal
+
+The collapsible terminal records token, Preview, metadata, and feature-toggle events. It remains pinned to the bottom while the configuration panel is open and never displays token values.
+
+![HITL Preview with the configuration panel and event terminal open](docs/assets/hitl-event-terminal.png)
 
 ## Prerequisites
 

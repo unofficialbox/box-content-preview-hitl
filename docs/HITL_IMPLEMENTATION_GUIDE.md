@@ -220,6 +220,9 @@ Both `defaultView` and the router-level `initialEntries` are needed in this pack
 
 **[src/components/hitl/HitlPreviewExample.tsx#L274-L295](https://github.com/unofficialbox/box-content-preview-hitl/blob/main/src/components/hitl/HitlPreviewExample.tsx#L274-L295)**
 
+> [!CAUTION]
+> **Beta workaround, not Box configuration.** This response interception compensates for behavior in the pinned beta. Revalidate it when upgrading and remove it when UI Elements forwards the required state natively.
+
 Use `responseInterceptor` to retain the structured extraction response:
 
 ```ts
@@ -252,6 +255,9 @@ The complete normalization, detailed-metadata hydration, and session fallback ar
 
 **[src/components/hitl/HitlPreviewExample.tsx#L326-L340](https://github.com/unofficialbox/box-content-preview-hitl/blob/main/src/components/hitl/HitlPreviewExample.tsx#L326-L340)**
 
+> [!CAUTION]
+> **Beta workaround, not Box configuration.** The host forwards field selection to Preview because this beta does not reliably connect unsaved Autofill references to read-only field selection.
+
 The host does not draw rectangles. It calls Preview's public API with the retained coordinates:
 
 ```ts
@@ -267,6 +273,9 @@ Attach this to focus and click events around `ContentPreview`, resolve the metad
 ### 10. 🩹 Repair the beta metadata save patch
 
 **[src/components/hitl/HitlPreviewExample.tsx#L297-L324](https://github.com/unofficialbox/box-content-preview-hitl/blob/main/src/components/hitl/HitlPreviewExample.tsx#L297-L324)**
+
+> [!CAUTION]
+> **Beta workaround, not Box configuration.** This interceptor changes outgoing metadata JSON Patch operations. Keep duplicate-path guards and remove the repair after confirming the upstream package persists these details itself.
 
 This beta can omit the HITL details when it builds the metadata JSON Patch. In `requestInterceptor`, add the missing operations before returning the request:
 
@@ -288,6 +297,9 @@ Guard against duplicate paths. Remove this workaround after confirming a future 
 ### 11. 🚨 Add numeric confidence percentages
 
 **[src/components/hitl/HitlPreviewExample.tsx#L237-L272](https://github.com/unofficialbox/box-content-preview-hitl/blob/main/src/components/hitl/HitlPreviewExample.tsx#L237-L272)**
+
+> [!CAUTION]
+> **Custom presentation code, not native UI Elements configuration.** The confidence feature flag requests and exposes confidence data, but the numeric percentage pills shown here are rendered by the host application.
 
 The native sidebar exposes review states but does not render the raw percentage required by this experience. Add a data attribute to each matching metadata heading:
 
@@ -319,6 +331,9 @@ Use a `MutationObserver` because the metadata sidebar renders and rerenders insi
 ### 12. 🚨 Build the host application shell
 
 **[src/components/hitl/HitlPreviewExample.tsx#L342-L547](https://github.com/unofficialbox/box-content-preview-hitl/blob/main/src/components/hitl/HitlPreviewExample.tsx#L342-L547)**
+
+> [!CAUTION]
+> **Custom application UI, not Box UI Elements configuration.** The configuration drawer, feature switches, fixed Preview sizing, and event terminal are host-owned UX and are not required to embed Content Preview.
 
 The shell in this repository is custom application UI, not Box UI Elements behavior:
 
