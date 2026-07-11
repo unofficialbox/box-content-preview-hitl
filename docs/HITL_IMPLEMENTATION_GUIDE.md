@@ -16,7 +16,7 @@ Follow these steps in order. Complete the authentication and native Preview inte
 - 🩹 **Beta workaround**: custom code required by the pinned beta that should be removed after the upstream gap is fixed.
 - ⚠️ **Known gap**: supported data or behavior that the native UI does not currently expose.
 
-### 1. ⚙️ Configure the Box application [source](https://github.com/unofficialbox/box-content-preview-hitl/blob/main/index.ts#L54-L78)
+### 1. ⚙️ Configure the Box application ([index.ts#L54-L78](https://github.com/unofficialbox/box-content-preview-hitl/blob/main/index.ts#L54-L78))
 
 Create a Custom App using Client Credentials Grant (CCG), authorize it in the enterprise, and use a Box user that can access the target file and metadata template.
 
@@ -40,7 +40,7 @@ BOX_PREVIEW_SCOPES="base_preview item_download root_readwrite annotation_edit an
 
 Keep the client secret and broad CCG token on the server.
 
-### 2. 📦 Install the known-good package versions [source](https://github.com/unofficialbox/box-content-preview-hitl/blob/main/package.json#L21-L29)
+### 2. 📦 Install the known-good package versions ([package.json#L21-L29](https://github.com/unofficialbox/box-content-preview-hitl/blob/main/package.json#L21-L29))
 
 ```sh
 bun add box-ui-elements@27.0.0-beta.66 \
@@ -57,7 +57,7 @@ import ContentPreview from "box-ui-elements/es/elements/content-preview";
 
 This Bun project also runs [`scripts/patch-box-ui-elements.mjs`](../scripts/patch-box-ui-elements.mjs) from `postinstall` to repair generated Flow-only modules and a CommonJS React import in the beta dependency graph. Other bundlers may not need this patch.
 
-### 3. 📦 Serve the package CSS from your application [source](https://github.com/unofficialbox/box-content-preview-hitl/blob/main/src/frontend.tsx#L7-L19)
+### 3. 📦 Serve the package CSS from your application ([src/frontend.tsx#L7-L19](https://github.com/unofficialbox/box-content-preview-hitl/blob/main/src/frontend.tsx#L7-L19))
 
 Serve the CSS files installed with `box-ui-elements`:
 
@@ -88,7 +88,7 @@ for (const href of [
 }
 ```
 
-### 4. 🔐 Implement CCG and token exchange on the server [source](https://github.com/unofficialbox/box-content-preview-hitl/blob/main/index.ts#L35-L105)
+### 4. 🔐 Implement CCG and token exchange on the server ([index.ts#L35-L105](https://github.com/unofficialbox/box-content-preview-hitl/blob/main/index.ts#L35-L105))
 
 First request a CCG service token for the configured user. Exchange it for a token restricted to one file and the required scopes.
 
@@ -123,7 +123,7 @@ GET /api/box-preview-token?fileId={fileId}
 }
 ```
 
-### 5. 🔐 Fetch the downscoped token in React [source](https://github.com/unofficialbox/box-content-preview-hitl/blob/main/src/components/hitl/HitlPreviewExample.tsx#L197-L235)
+### 5. 🔐 Fetch the downscoped token in React ([src/components/hitl/HitlPreviewExample.tsx#L197-L235](https://github.com/unofficialbox/box-content-preview-hitl/blob/main/src/components/hitl/HitlPreviewExample.tsx#L197-L235))
 
 ```ts
 const [token, setToken] = useState("");
@@ -139,7 +139,7 @@ const getToken = useCallback(async () => token, [token]);
 
 Pass an async function to `ContentPreview`. Preview `3.59.0` requires a token function for its annotation integration.
 
-### 6. ⚙️ Configure the HITL features [source](https://github.com/unofficialbox/box-content-preview-hitl/blob/main/src/components/hitl/HitlPreviewExample.tsx#L19-L34)
+### 6. ⚙️ Configure the HITL features ([src/components/hitl/HitlPreviewExample.tsx#L19-L34](https://github.com/unofficialbox/box-content-preview-hitl/blob/main/src/components/hitl/HitlPreviewExample.tsx#L19-L34))
 
 Keep the flags in state if users should be able to toggle them:
 
@@ -155,7 +155,7 @@ const [features, setFeatures] = useState({
 
 Pass the same object to both `ContentPreview.features` and `contentSidebarProps.features`.
 
-### 7. ✅ Render Content Preview and default to Metadata [source](https://github.com/unofficialbox/box-content-preview-hitl/blob/main/src/components/hitl/HitlPreviewExample.tsx#L371-L440)
+### 7. ✅ Render Content Preview and default to Metadata ([src/components/hitl/HitlPreviewExample.tsx#L371-L440](https://github.com/unofficialbox/box-content-preview-hitl/blob/main/src/components/hitl/HitlPreviewExample.tsx#L371-L440))
 
 ```tsx
 const boxAnnotations = new BoxAnnotations({});
@@ -194,7 +194,7 @@ const boxAnnotations = new BoxAnnotations({});
 
 Both `defaultView` and the router-level `initialEntries` are needed in this package version. Without `initialEntries`, the outer Preview router opens Activity first.
 
-### 8. 🩹 Retain Box AI references and confidence scores [source](https://github.com/unofficialbox/box-content-preview-hitl/blob/main/src/components/hitl/HitlPreviewExample.tsx#L274-L295)
+### 8. 🩹 Retain Box AI references and confidence scores ([src/components/hitl/HitlPreviewExample.tsx#L274-L295](https://github.com/unofficialbox/box-content-preview-hitl/blob/main/src/components/hitl/HitlPreviewExample.tsx#L274-L295))
 
 Use `responseInterceptor` to retain the structured extraction response:
 
@@ -224,7 +224,7 @@ const box = {
 
 The complete normalization, detailed-metadata hydration, and session fallback are in [`HitlPreviewExample.tsx`](../src/components/hitl/HitlPreviewExample.tsx).
 
-### 9. 🩹 Bridge metadata selection to native Preview boxes [source](https://github.com/unofficialbox/box-content-preview-hitl/blob/main/src/components/hitl/HitlPreviewExample.tsx#L326-L340)
+### 9. 🩹 Bridge metadata selection to native Preview boxes ([src/components/hitl/HitlPreviewExample.tsx#L326-L340](https://github.com/unofficialbox/box-content-preview-hitl/blob/main/src/components/hitl/HitlPreviewExample.tsx#L326-L340))
 
 The host does not draw rectangles. It calls Preview's public API with the retained coordinates:
 
@@ -238,7 +238,7 @@ if (boxes.length && preview?.showBoundingBoxHighlights) {
 
 Attach this to focus and click events around `ContentPreview`, resolve the metadata field label, and look up its boxes. Native Preview then owns drawing, zoom, scrolling, resize, and annotation mode.
 
-### 10. 🩹 Repair the beta metadata save patch [source](https://github.com/unofficialbox/box-content-preview-hitl/blob/main/src/components/hitl/HitlPreviewExample.tsx#L297-L324)
+### 10. 🩹 Repair the beta metadata save patch ([src/components/hitl/HitlPreviewExample.tsx#L297-L324](https://github.com/unofficialbox/box-content-preview-hitl/blob/main/src/components/hitl/HitlPreviewExample.tsx#L297-L324))
 
 This beta can omit the HITL details when it builds the metadata JSON Patch. In `requestInterceptor`, add the missing operations before returning the request:
 
@@ -257,7 +257,7 @@ operations.push(
 
 Guard against duplicate paths. Remove this workaround after confirming a future UI Elements version creates these operations itself.
 
-### 11. 🚨 Add numeric confidence percentages [source](https://github.com/unofficialbox/box-content-preview-hitl/blob/main/src/components/hitl/HitlPreviewExample.tsx#L237-L272)
+### 11. 🚨 Add numeric confidence percentages ([src/components/hitl/HitlPreviewExample.tsx#L237-L272](https://github.com/unofficialbox/box-content-preview-hitl/blob/main/src/components/hitl/HitlPreviewExample.tsx#L237-L272))
 
 The native sidebar exposes review states but does not render the raw percentage required by this experience. Add a data attribute to each matching metadata heading:
 
@@ -286,7 +286,7 @@ Render the pill with CSS:
 
 Use a `MutationObserver` because the metadata sidebar renders and rerenders inside UI Elements after network responses and navigation.
 
-### 12. 🚨 Build the host application shell [source](https://github.com/unofficialbox/box-content-preview-hitl/blob/main/src/components/hitl/HitlPreviewExample.tsx#L342-L547)
+### 12. 🚨 Build the host application shell ([src/components/hitl/HitlPreviewExample.tsx#L342-L547](https://github.com/unofficialbox/box-content-preview-hitl/blob/main/src/components/hitl/HitlPreviewExample.tsx#L342-L547))
 
 The shell in this repository is custom application UI, not Box UI Elements behavior:
 
@@ -328,7 +328,7 @@ Render the terminal only when configuration is open:
 {isSettingsOpen ? <PreviewEventTerminal events={events} /> : null}
 ```
 
-### 13. ✅ Verify the complete flow [build commands](https://github.com/unofficialbox/box-content-preview-hitl/blob/main/package.json#L6-L11)
+### 13. ✅ Verify the complete flow ([package.json#L6-L11](https://github.com/unofficialbox/box-content-preview-hitl/blob/main/package.json#L6-L11))
 
 ```sh
 PORT=3000 bun run dev
