@@ -18,6 +18,8 @@ A working React example of Box Content Preview with a human-in-the-loop metadata
 - [Verification](#verification)
 - [Documentation](#documentation)
 
+![Box Content Preview showing a native bounding-box highlight and metadata confidence scores](docs/assets/hitl-bounding-box-preview.png)
+
 ## What This Demonstrates
 
 - Client Credentials Grant (CCG) with a Box user subject.
